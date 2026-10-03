@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Routine Tracker</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" 
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <link
+        rel="stylesheet" href="style.css"
+
+    >
+</head>
+<body>
+
+<!-- ================= LOGIN PAGE ================= -->
+
+<div id="loginPage">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            <i class="bi bi-check2-circle"></i>
+            Routine Tracker
+        </div>
+
+        <h5 class="text-center mb-4">Login to your account</h5>
+
+        <form onsubmit="login(event)">
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Enter password"
+                    required
+                >
+            </div>
+
+            <button class="btn btn-dark w-100">
+                Login
+            </button>
+
+        </form>
+
+        <p class="text-center mt-3">
+            Don't have an account?
+            <a href="#" onclick="showRegister()">Register</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= REGISTER PAGE ================= -->
+
+<div id="registerPage" style="display:none;">
+
+    <div id="loginPage">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+                <i class="bi bi-person-plus"></i>
+                Register
+            </div>
+
+            <form onsubmit="register(event)">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registerName"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <button class="btn btn-dark w-100">
+                    Create Account
+                </button>
+
+            </form>
+
+            <p class="text-center mt-3">
+
+                Already have an account?
+
+                <a href="#" onclick="showLogin()">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div id="dashboard" style="display:none;">
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-dark">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand">
+
+                <i class="bi bi-check2-circle"></i>
+
+                Daily Routine Tracker
+
+            </a>
+
+            <button
+                class="btn btn-outline-light"
+                onclick="logout()"
+            >
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <div class="main-container">
+
+        <div class="welcome">
+
+            <h2>
+                Good Evening, <span id="userName">User</span> 👋
+            </h2>
+
+            <p class="text-muted">
+                Track your daily habits and maintain consistency.
+            </p>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-md-4">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📊
+                    </div>
+
+                    <div class="text-muted">
+                        Today's Progress
+                    </div>
+
+                    <div class="stat-number">
+                        <span id="progressNumber">0</span>%
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🔥
+                    </div>
+
+                    <div class="text-muted">
+                        Current Streak
+                    </div>
+
+                    <div class="stat-number">
+                        <span id="streak">0</span>
+                    </div>
+
+                    <small class="text-muted">
+                        Days
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ✅
+                    </div>
+
+                    <div class="text-muted">
+                        Completed Today
+                    </div>
+
+                    <div class="stat-number">
+
+                        <span id="completedCount">
+                            0
+                        </span>/8
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TWO COLUMNS -->
+
+        <div class="row g-4">
+
+
+            <!-- ROUTINES -->
+
+            <div class="col-lg-7">
+
+                <div class="routine-card">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                        <h4>
+                            Today's Routines
+                        </h4>
+
+                        <span id="todayDate" class="text-muted"></span>
+
+                    </div>
+
+
+                    <!-- Progress -->
+
+                    <div class="mb-4">
+
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+                                Daily Progress
+                            </span>
+
+                            <span>
+                                <b id="progressText">
+                                    0%
+                                </b>
+                            </span>
+
+                        </div>
+
+                        <div class="progress mt-2">
+
+                            <div
+                                id="progressBar"
+                                class="progress-bar bg-success"
+                                style="width:0%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ROUTINE 1 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine1"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                🌅
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Wake Up Early
+                                </div>
+
+                                <div class="routine-time">
+                                    Wake up before 7:00 AM
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                          
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 2 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine2"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                🏋️
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Gym / Exercise
+                                </div>
+
+                                <div class="routine-time">
+                                    Daily exercise
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                           
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 3 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine3"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                📚
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Study
+                                </div>
+
+                                <div class="routine-time">
+                                    Complete daily study
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                           
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 4 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine4"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                🚿
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Bath
+                                </div>
+
+                                <div class="routine-time">
+                                    Daily bath
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                           
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 5 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine5"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                💧
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Drink Water
+                                </div>
+
+                                <div class="routine-time">
+                                    Drink 4–5 litres of water
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                            
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 6 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine6"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                🚶
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Walking
+                                </div>
+
+                                <div class="routine-time">
+                                    Complete daily walking
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                           
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 7 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine7"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                📖
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Reading
+                                </div>
+
+                                <div class="routine-time">
+                                    Read for some time
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                           
+                        >
+
+                    </div>
+
+
+                    <!-- ROUTINE 8 -->
+
+                    <div
+                        class="routine-item"
+                        id="routine8"
+                    >
+
+                        <div class="routine-left">
+
+                            <span class="routine-icon">
+                                😴
+                            </span>
+
+                            <div>
+
+                                <div class="routine-name">
+                                    Sleep On Time
+                                </div>
+
+                                <div class="routine-time">
+                                    Sleep on scheduled time
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            class="form-check-input routine-check"
+                            
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CALENDAR -->
+
+            <div class="col-lg-5">
+
+                <div class="calendar-card">
+
+                    <div class="d-flex justify-content-between">
+
+                        <h4>
+                            Monthly Progress
+                        </h4>
+
+                        <span id="monthName"></span>
+
+                    </div>
+
+
+                    <div class="calendar">
+
+                        <div class="day-header">Sun</div>
+                        <div class="day-header">Mon</div>
+                        <div class="day-header">Tue</div>
+                        <div class="day-header">Wed</div>
+                        <div class="day-header">Thu</div>
+                        <div class="day-header">Fri</div>
+                        <div class="day-header">Sat</div>
+
+                        <div class="calendar-day day-complete">
+                            1<br>
+                            <small>100%</small>
+                        </div>
+
+                        <div class="calendar-day day-complete">
+                            2<br>
+                            <small>100%</small>
+                        </div>
+
+                        <div class="calendar-day day-partial">
+                            3<br>
+                            <small>75%</small>
+                        </div>
+
+                        <div class="calendar-day day-empty">
+                            4<br>
+                            <small>0%</small>
+                        </div>
+
+                        <div class="calendar-day day-complete">
+                            5<br>
+                            <small>100%</small>
+                        </div>
+
+                        <div class="calendar-day day-partial">
+                            6<br>
+                            <small>50%</small>
+                        </div>
+
+                        <div class="calendar-day day-complete">
+                            7<br>
+                            <small>100%</small>
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="mt-3">
+
+                        <p>
+                            🟢 Completed
+                        </p>
+
+                        <p>
+                            🟡 Partially Completed
+                        </p>
+
+                        <p>
+                            🔴 Not Completed
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+
+
+
+<!-- CALENDAR SECTION -->
+<section class="calendar-section">
+    <div class="calendar-header">
+        <button id="prevMonth">❮</button>
+
+        <h2 id="calendarMonth">October 2026</h2>
+
+        <button id="nextMonth">❯</button>
+    </div>
+
+    <div class="calendar-weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+    </div>
+
+    <div id="calendarGrid" class="calendar-grid"></div>
+
+    <div class="calendar-legend">
+        <span>
+            <span class="legend completed"></span>
+            Completed
+        </span>
+
+        <span>
+            <span class="legend partial"></span>
+            Partial
+        </span>
+
+        <span>
+            <span class="legend pending"></span>
+            Pending
+        </span>
+    </div>
+</section>
+<!-- DAILY DETAILS MODAL -->
+<div id="dailyDetailsModal" class="daily-modal">
+    <div class="daily-modal-content">
+
+        <div class="daily-modal-header">
+            <div>
+                <h2 id="dailyModalTitle">Daily Routine Details</h2>
+                <p id="dailyModalDate"></p>
+            </div>
+
+            <button id="closeDailyModal" class="daily-modal-close">&times;</button>
+        </div>
+
+        <div id="dailyRoutineList" class="daily-routine-list"></div>
+
+        <div class="daily-modal-footer">
+            <span id="dailyCompletedCount"></span>
+        </div>
+
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
